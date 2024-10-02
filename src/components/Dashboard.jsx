@@ -7,6 +7,7 @@ function Dashboard() {
 
     const { contacts } = useContext(Context)
 
+
     return (
         <main className="dashoard">
             <h2>Contacts</h2>
