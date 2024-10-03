@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Context } from "../App";
 import ContactList from "./ContactList";
+import '../style/DashboardCSS.css'
 
 
 function Dashboard() {

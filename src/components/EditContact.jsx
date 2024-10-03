@@ -1,11 +1,13 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Context } from "../App";
 import '../style/CreateContactCSS.css'
 
-export default function CreateForm() {
+export default function EditForm() {
 
-    const { contacts, setContacts, navigate, handleNavigation } = useContext(Context)
+    const { id } = useParams();
+    const { contacts, setContacts, handleNavigation } = useContext(Context);
+    const contact = contacts.find((contact) => contact.id === parseInt(id));
     
 
     const [formData, setFormData] = useState({
@@ -29,11 +31,14 @@ export default function CreateForm() {
       }, []);
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setContacts([...contacts, formData]); // Save formData to context
-    handleNavigation('/'); // Redirect to contacts page or any other page
-  };
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        setContacts(contacts.map(contact => 
+          contact.id === parseInt(id) ? { ...contact, ...formData } : contact
+        ));
+    handleNavigation(`/contacts/${id}`)
+
+      };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -45,8 +50,9 @@ export default function CreateForm() {
 
   return (
     <form className="create-contact" onSubmit={handleSubmit}>
-      <h2>Create Contact</h2>
-      <label htmlFor="firstName">Firstname</label>
+      <h2>Edit Contact</h2>
+      <p>Current Firstname: {contact.firstName}</p>
+      <label htmlFor="firstName">New Firstname</label>
       <input
         type="text"
         id="firstName"
@@ -54,7 +60,9 @@ export default function CreateForm() {
         onChange={handleChange}
         value={formData.firstName}
       />
-      <label htmlFor="lastName">Lastname</label>
+      <p>Current Lastname: {contact.lastName}</p>
+
+      <label htmlFor="lastName">New Lastname</label>
       <input
         type="text"
         id="lastName"
@@ -62,7 +70,9 @@ export default function CreateForm() {
         onChange={handleChange}
         value={formData.lastName}
       />
-      <label htmlFor="street">Street</label>
+      <p>Current Street: {contact.city}</p>
+
+      <label htmlFor="street">New Street</label>
       <input
         type="text"
         id="street"
@@ -70,7 +80,9 @@ export default function CreateForm() {
         onChange={handleChange}
         value={formData.street}
       />
-      <label htmlFor="city">City</label>
+      <p>Current City: {contact.city}</p>
+
+      <label htmlFor="city">New City</label>
       <input
         type="text"
         id="city"
@@ -78,7 +90,7 @@ export default function CreateForm() {
         onChange={handleChange}
         value={formData.city}
       />
-      <button type="submit">Create</button>
+      <button type="submit">Save</button>
       <button onClick={() => handleNavigation("/")}>Return</button>
     </form>
   );

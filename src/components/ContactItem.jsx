@@ -8,7 +8,7 @@ export default function ContactItem({
     return (
         <li>
         <article className="name">
-          <h1>{firstName} {lastName}</h1>
+          {/* <h1>{firstName} {lastName}</h1> */}
           <h1>
                     <Link to={`/contacts/${id}`}>{firstName} {lastName}</Link>
                 </h1>
